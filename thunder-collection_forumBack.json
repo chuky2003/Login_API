@@ -1,0 +1,172 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "forumBack",
+    "dateExported": "2023-10-25T22:52:16.232Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "name": "Accounts",
+            "containerId": "",
+            "created": "2023-10-12T17:39:27.293Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c5cec4a5-7eaa-4fd4-9201-1bbad30fbc9a",
+            "name": "forgotPassword",
+            "containerId": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "created": "2023-10-25T16:32:39.220Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "326a208d-eba1-4c2a-950a-4cfbc655f8c8",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "name": "createAccount",
+            "url": "/api/accountManager/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-10-12T17:39:27.293Z",
+            "modified": "2023-10-25T20:23:11.068Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user\":\"test2\",\n  \"password\":\"195418Teby\",\n  \"email\":\"gotruderki@gufum.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fbd5f997-329f-47ab-b6fe-081ba16f732f",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "c5cec4a5-7eaa-4fd4-9201-1bbad30fbc9a",
+            "name": "sendCode",
+            "url": "/api/accountManager/forgotAccount/sendCode",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-10-24T12:02:48.180Z",
+            "modified": "2023-10-25T21:19:56.840Z",
+            "headers": [
+                {
+                    "name": "Accept-Language",
+                    "value": "es"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\":\"gotruderki@gufum.com\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "83c4503f-afce-4a3f-a11d-7501e2a3deee",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "name": "loginAccount",
+            "url": "/api/accountManager/login",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-10-12T17:39:27.294Z",
+            "modified": "2023-10-12T17:39:27.294Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"user\":\"test1\",\n  \"password\":\"195418\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ddea8b53-0901-4c92-b09d-0adfe03b7fdd",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "c5cec4a5-7eaa-4fd4-9201-1bbad30fbc9a",
+            "name": "validationCode",
+            "url": "/api/accountManager/forgotAccount/validationCode",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-10-25T00:50:40.363Z",
+            "modified": "2023-10-25T21:20:30.323Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": ""
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"code\":\"975735956\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "709500bb-ceca-4066-84e7-a1aff497761e",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "name": "logOut",
+            "url": "/api/authManager/logOut",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-10-12T17:39:27.297Z",
+            "modified": "2023-10-12T17:39:27.297Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTcxMjkzODd9.PDG7Sqh1Sx5XXNsEb3TWNG5nRANRtZssOuel2Qat8Jw"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2a414a04-c5bd-4375-b259-fa9d05c365cc",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "2cd0da82-8e2b-4887-977a-bd762c80238b",
+            "name": "testToken",
+            "url": "/api/accountManager/token",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-10-12T17:39:27.296Z",
+            "modified": "2023-10-12T17:39:27.296Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTcxMjkzODd9.PDG7Sqh1Sx5XXNsEb3TWNG5nRANRtZssOuel2Qat8Jw"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c0a7a247-8a12-4910-b80f-29208949ef27",
+            "colId": "435e3cb3-619c-49a1-a6d6-9a70fa362a07",
+            "containerId": "c5cec4a5-7eaa-4fd4-9201-1bbad30fbc9a",
+            "name": "changePass",
+            "url": "/api/accountManager/forgotAccount/changePass",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-10-25T21:58:35.559Z",
+            "modified": "2023-10-25T22:19:35.145Z",
+            "headers": [
+                {
+                    "name": "Cookie",
+                    "value": "\"description\": \"Ejemplo de Colección Thunder Client\""
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "http://localhost:5000"
+        }
+    }
+}
