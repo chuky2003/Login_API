@@ -9,7 +9,6 @@ from flask import Blueprint
 #---------------------------------------------
 from controllers.accountManager.registerAccount import registerApp
 from controllers.accountManager.loginAccount import loginAPP
-from controllers.authManager.logOut import logOutApp
 from controllers.accountManager.forgotAccount import forgotAccount
 
 
@@ -23,3 +22,10 @@ accountManager.register_blueprint(registerApp)
 
 forgotAccountManager = Blueprint('forgotManager', __name__,url_prefix=f"{prefixAccount}/forgotAccount")
 forgotAccountManager.register_blueprint(forgotAccount)
+
+#--------------------=AUTH TOKEN=--------------------#
+from controllers.authManager.manageToken import tokenApp
+
+prefixAuth="/api/authToken"
+authTokenManager=Blueprint('authToken',__name__,url_prefix=f"{prefixAuth}")
+authTokenManager.register_blueprint(tokenApp)

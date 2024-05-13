@@ -2,11 +2,9 @@ import email
 import random
 from weakref import KeyedRef
 from flask import Flask,Blueprint,request,jsonify
-from utils.queryManager import queryGetRows,queryInsert,queryUpdate
 from services.mail import enviar_correo
 from services.validators.validations import validate, validateCode, validateEmail,validatePass, validateUser
 from datetime import datetime,timedelta
-from utils.Auth import createToken
 import jwt
 from dotenv import load_dotenv, dotenv_values 
 import os

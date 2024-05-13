@@ -2,11 +2,8 @@ from math import exp
 from attr import validate
 from flask import Flask,request,jsonify,make_response,Blueprint
 import jwt
-from utils.Auth import authOfPass, exceptionsAuth
-from utils.queryManager import queryInsert,queryGetRows
 import bcrypt
 from dotenv import load_dotenv,dotenv_values
-from utils.Auth import createToken
 from services.protectLogin import protect,protectFinal, protectOfLogin
 import os
 import utils.codes as iCodes
@@ -16,6 +13,7 @@ from models.modelsORM import User,db
 from services.validators.validations import validateEmail, validatePass, validateUser
 #no se por que pero si importo solo incorrect no funciona
 from utils.customsExceptions import *
+from middlewares.middleAuth import createToken
 
 loginAPP = Blueprint('login', __name__)
 
@@ -64,3 +62,10 @@ async def validate(user,password):
         raise invalid.User
     if(not validatePass(password)):
         raise invalid.Password
+
+async def authOfPass(password,passHashed,userID,role):
+        if bcrypt.checkpw(password.encode("utf-8"), passHashed.encode('utf-8')):
+                token=createToken({'userID':userID, 'role':role},SECRET_KEY)
+                return token
+        else:
+            raise incorrect.Password

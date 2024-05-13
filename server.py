@@ -1,5 +1,5 @@
+from linecache import clearcache
 from flask import Flask, request, jsonify, make_response, Blueprint
-from utils.queryManager import queryInsert, queryGetRows
 import json
 import bcrypt
 from dotenv import load_dotenv, dotenv_values
@@ -11,7 +11,7 @@ from extension import mail
 from flask_sqlalchemy import SQLAlchemy
 from models.modelsORM import db
 import pymysql
-from sqlalchemy import create_engine,text
+from sqlalchemy import create_engine,text, true
 from flask_migrate import Migrate
 from flask_cors import CORS
 import asyncio
@@ -20,18 +20,20 @@ import asyncio
 
 pymysql.install_as_MySQLdb()
 
-load_dotenv()
+load_dotenv(override=True)
 
 env = os.getenv
 
 app = Flask(__name__)
 app.config['CACHE_TYPE'] = 'simple'
 #cache = Cache(app)
-
-
 # Registrando las rutas definidas en routersAccounts.py
 app.register_blueprint(routers.accountManager)
 app.register_blueprint(routers.forgotAccountManager)
+#ESTA RUTA FUNCIONA SOLO EN DEBUG MODE 
+if env("DEVELOPMENT_KEY") and env("DEVELOPMENT_KEY")=="True":
+    print("La aplicacion está corriendo en modo development")
+    app.register_blueprint(routers.authTokenManager)
 
 # Configura CORS para permitir el acceso desde cualquier origen
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -57,5 +59,5 @@ with app.app_context():
     db.create_all()
 
 if (__name__ == '__main__'):
-    app.run(debug=True)
+    app.run()
     mail.init_app(app)

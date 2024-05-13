@@ -1,6 +1,5 @@
 from array import array
 from flask import Flask,request,jsonify,make_response,Blueprint,flash,redirect,current_app
-from utils.queryManager import queryInsert,queryGetRows
 import json
 import bcrypt
 from dotenv import load_dotenv,dotenv_values
