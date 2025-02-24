@@ -49,8 +49,7 @@ app.config["MAIL_DEFAULT_SENDER"]=ConfigMail.MAIL_USERNAME
 mail = Mail(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("DATABASE_DB")}'
-#print(app.config['SQLALCHEMY_DATABASE_URI'])
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://root:195418@127.0.0.1/zeroForum'
+
 db.init_app(app)
 migrate = Migrate(app, db)
 
