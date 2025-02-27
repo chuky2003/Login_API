@@ -15,7 +15,7 @@ from typing import Optional
 db = SQLAlchemy()
 
 class User(db.Model):
-    __tablename__ = "ZF_ACCOUNTS"
+    __tablename__ = "ACCOUNTS"
     _id = db.Column(db.Integer(), primary_key=True, unique=True)
     user = db.Column(db.String(70), nullable=False, unique=True)
     email = db.Column(db.String(320), nullable=False, unique=True)
@@ -84,7 +84,7 @@ class User(db.Model):
 
     
 class blackList(db.Model):
-    __tablename__ = "ZF_BLACKLIST"
+    __tablename__ = "BLACKLIST"
     _id = db.Column(db.Integer(), primary_key=True)
     token = db.Column(db.String(132), nullable=False, unique=True)
 
@@ -105,6 +105,6 @@ class blackList(db.Model):
 
 
 class blackListCode(db.Model):
-    __tablename__ = "ZF_BLACKLIST_CODE"
+    __tablename__ = "BLACKLIST_CODE"
     _id = db.Column(db.Integer(), primary_key=True)
     codeExpired = db.Column(db.Integer())
