@@ -11,7 +11,7 @@ def app():
         except Exception as e:
             print(f"[ERROR] Error al crear la base de datos: {e}")
             raise  # Relanza la excepción para que pytest lo detecte como un fallo.
-
+    # app.run()
     yield app
 
 

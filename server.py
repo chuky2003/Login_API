@@ -4,18 +4,13 @@ import json
 from dotenv import load_dotenv, dotenv_values
 import routers.routerAccounts as routers
 import os
-from flask_mail import Mail, Message
 from config.configMail import ConfigMail
 from extension import mail
-from flask_sqlalchemy import SQLAlchemy
 from models.modelsORM import db
 import pymysql
-from sqlalchemy import create_engine,text, true
 from flask_migrate import Migrate
 from flask_cors import CORS
-import asyncio
-#from flask_caching import Cache
-
+from flask_mail import Mail
 
 pymysql.install_as_MySQLdb()
 
@@ -23,10 +18,12 @@ pymysql.install_as_MySQLdb()
 load_dotenv(override=True)
 
 env = os.getenv
-def create_app(config_name):
+
+
+def create_app(config_name=None):
     app = Flask(__name__)
     print(f"estas en: {config_name}")
-    app.config['CACHE_TYPE'] = 'simple'
+    app.config["CACHE_TYPE"] = "simple"
 
     app.register_blueprint(routers.accountManager)
     app.register_blueprint(routers.forgotAccountManager)
@@ -38,25 +35,27 @@ def create_app(config_name):
     app.config.update(vars(ConfigMail))
 
     mail = Mail(app)
-    if(config_name=='production'):
-        app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("DATABASE_DB")}'
+    if config_name != "production":
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("TESTING_DB")}'
+        )
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("TESTING_DB")}'
-
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("DATABASE_DB")}'
+        )
     db.init_app(app)
     migrate = Migrate(app, db)
 
     with app.app_context():
-        if config_name!='production':
+        if config_name != "production":
             db.drop_all()
         db.create_all()
-    
+
     mail.init_app(app)
     return app
 
 
-
-if __name__ == '__main__': 
+if __name__ == "__main__":
     app = create_app("production")
     app.run(debug=True)
     mail.init_app(app)
