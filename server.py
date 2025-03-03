@@ -20,6 +20,7 @@ load_dotenv(override=True)
 env = os.getenv
 
 
+
 def create_app(config_name=None):
     app = Flask(__name__)
     print(f"estas en: {config_name}")
@@ -44,7 +45,7 @@ def create_app(config_name=None):
             f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("DATABASE_DB")}'
         )
     db.init_app(app)
-    migrate = Migrate(app, db)
+    Migrate(app, db)
 
     with app.app_context():
         if config_name != "production":

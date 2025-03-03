@@ -7,26 +7,44 @@ def test_login_correct(client, user="test2005", password="123456Test",email="tes
         "user": user,
         "email": email,
         "password": password
-    })
-    # print(response.json)
-    response1 = client.post('/api/accountManager/login',
+    }).data
+    responseBin = client.post('/api/accountManager/login',
                            json={"user": user,"password":password})
-    assert b"success" in response1.data
-    token = response1.json.get("success", {}).get("token")
+    assert b"success" in responseBin.data
+    token = responseBin.json.get("success", {}).get("token")
     assert token is not None
 
 
 def test_user_incorrect(client, user="UsuarioIncorrect", password="Messias."):
-    response = client.post('/api/accountManager/login',
-                           json={"user": user, "password": password})
-    assert b"error" in response.data
-    assert b"el usuario ingresado" in response.data
+    response = client.post('/api/accountManager/login',json={
+        "user": user,
+        "password": password
+    }).data
+    assert b"error" in response
+    assert b"el usuario ingresado" in response
+
+def test_pass_incorrect(client,user="bicicleta22",email="testeando@outlook.com",password="Automovil20"):
+    client.post('/api/accountManager/register', json={
+        "user": user,
+        "email": email,
+        "password": password
+    }).data
+    
+    response = client.post('/api/accountManager/login',json={
+        "user": user,
+        "password": password.__add__("xd")
+    }).data
+
+    assert b"error" in response
+    assert b"contrase" and b"incorrecta" in response
 
 def test_parameters_invalid(client):
-    response =client.post('/api/accountManager/login',
-                        json={"user":15,"password":16})
-    assert b"error" in response.data
-    assert b"el usuario debe tener entre"
+    response =client.post('/api/accountManager/login',json={
+        "user":15,
+        "password":16
+    }).data
+    assert b"error" in response
+    assert b"El usuario" in response
 
 
 # !!!!la siguente funcion realentiza la aplicacion durante 60 segundos-
@@ -38,14 +56,14 @@ def test_parameters_invalid(client):
 # def test_endpoint_with_refreshed_token(client,user,password):
 #       #login
 #       login_response = client.post('/api/accountManager/login',
-#                                    json={"user": user, "password": password})
+#                                    json={"user": user, "password": password}).data
 #       token = login_response.json["success"]["token"]
 #       #refresh
 #       duration=int(env("TOKEN_DURATION"))
 #       sleep((duration*60)-6)
-#       refresh_response = client.post('/api/authToken/refreshToken', headers={'Authorization': token})
+#       refresh_response = client.post('/api/authToken/refreshToken', headers={'Authorization': token}).data
 #       refreshedToken=refresh_response.json["token"]
 #       #test
-#       test_response = client.post('/api/authToken/test', headers={'Authorization': refreshedToken})
-#       assert b"success" in test_response.data
+#       test_response = client.post('/api/authToken/test', headers={'Authorization': refreshedToken}).data
+#       assert b"success" in test_response
 #
