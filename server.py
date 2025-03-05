@@ -20,10 +20,8 @@ load_dotenv(override=True)
 env = os.getenv
 
 
-
-def create_app(config_name=None):
+def create_app(production=True):
     app = Flask(__name__)
-    print(f"estas en: {config_name}")
     app.config["CACHE_TYPE"] = "simple"
 
     app.register_blueprint(routers.accountManager)
@@ -36,19 +34,15 @@ def create_app(config_name=None):
     app.config.update(vars(ConfigMail))
 
     mail = Mail(app)
-    if config_name != "production":
-        app.config["SQLALCHEMY_DATABASE_URI"] = (
-            f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("TESTING_DB")}'
-        )
-    else:
-        app.config["SQLALCHEMY_DATABASE_URI"] = (
-            f'mysql://{env("USER_DB")}:{env("PASSWORD_DB")}@{env("HOST_DB")}/{env("DATABASE_DB")}'
-        )
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        env("URL_DB") if production else env("URL_DB_TESTING")
+    )
+
     db.init_app(app)
     Migrate(app, db)
 
     with app.app_context():
-        if config_name != "production":
+        if not production:
             db.drop_all()
         db.create_all()
 
@@ -57,6 +51,6 @@ def create_app(config_name=None):
 
 
 if __name__ == "__main__":
-    app = create_app("production")
+    app = create_app(True)
     app.run(debug=True)
     mail.init_app(app)

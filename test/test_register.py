@@ -1,7 +1,7 @@
 import pytest
 
 def test_create_account(client, user="test2021", password="123456Test", email="test2021@hotmail.com"):
-    """Verifica si un usuario ya existe en la base de datos."""
+    """Verifica la creacion de usuario correcta."""
     response = client.post('/api/accountManager/register', json={
         "user": user,
         "email": email,
